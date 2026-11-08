@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE CHRONICLES - JUNK JOURNAL</title>
+    <!-- Google Fonts for Junk Journal / Scrapbook Vibe -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Gochi+Hand&family=Special+Elite&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        craft: {
+                            100: '#f9f6ed',
+                            200: '#efe8d5',
+                            300: '#e3d6b8',
+                            400: '#cbb68d',
+                            500: '#ad9564',
+                            800: '#5c4b2b',
+                            900: '#382d18'
+                        },
+                        ink: {
+                            blue: '#2c3e50',
+                            red: '#a93226',
+                            stamp: '#8b0000',
+                            sepia: '#5e4331'
+                        }
+                    },
+                    fontFamily: {
+                        hand: ['Caveat', 'cursive'],
+                        gochi: ['Gochi Hand', 'cursive'],
+                        typewriter: ['Courier Prime', 'monospace'],
+                        stamp: ['Special Elite', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base Junk Journal Paper Textures & Backgrounds */
+        body {
+            background-color: #d9cbb0;
+            background-image: 
+                radial-gradient(#ad9564 0.75px, transparent 0.75px), 
+                radial-gradient(#ad9564 0.75px, #d9cbb0 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #382d18;
+            font-family: 'Courier Prime', monospace;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Torn Paper Border Clips */
+        .torn-paper {
+            background-color: #efe8d5;
+            background-image: radial-gradient(#d3c6a4 1px, transparent 0);
+            background-size: 16px 16px;
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .torn-paper-edge {
+            clip-path: polygon(
+                0% 0%, 100% 0%, 
+                100% calc(100% - 8px), 98% 100%, 95% calc(100% - 6px), 92% 100%, 88% calc(100% - 8px), 
+                84% 100%, 80% calc(100% - 6px), 76% 100%, 72% calc(100% - 8px), 68% 100%, 
+                64% calc(100% - 6px), 60% 100%, 56% calc(100% - 8px), 52% 100%, 48% calc(100% - 6px), 
+                44% 100%, 40% calc(100% - 8px), 36% 100%, 32% calc(100% - 6px), 28% 100%, 
+                24% calc(100% - 8px), 20% 100%, 16% calc(100% - 6px), 12% 100%, 8% calc(100% - 8px), 
+                4% 100%, 0% calc(100% - 6px)
+            );
+        }
+
+        /* Washi Tape Graphic Effects */
+        .washi-tape {
+            background-color: rgba(227, 214, 184, 0.75);
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.3) 0, rgba(255,255,255,0.3) 10px, transparent 0, transparent 20px);
+            border-left: 2px dashed rgba(0,0,0,0.1);
+            border-right: 2px dashed rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            backdrop-filter: blur(1px);
+        }
+
+        .washi-tape-pink {
+            background-color: rgba(235, 180, 180, 0.7);
+        }
+
+        .washi-tape-blue {
+            background-color: rgba(175, 205, 225, 0.7);
+        }
+
+        /* Polaroid Photo Frame Styling */
+        .polaroid-frame {
+            background: #fbf9f5;
+            padding: 12px 12px 45px 12px;
+            box-shadow: 4px 8px 18px rgba(0, 0, 0, 0.2), 0 0 2px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .polaroid-frame:hover {
+            transform: scale(1.03) rotate(0deg) !important;
+            z-index: 30 !important;
+            box-shadow: 8px 16px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Vintage Rubber Stamp Effect */
+        .rubber-stamp {
+            font-family: 'Special Elite', cursive;
+            border: 3px double #8b0000;
+            color: #8b0000;
+            padding: 4px 12px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.85;
+            mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="white"/><circle cx="20" cy="20" r="10" fill="black"/><circle cx="70" cy="80" r="15" fill="black"/></svg>');
+            transform: rotate(-5deg);
+        }
+
+        /* Paper Clips & Pushpins Visual Effects */
+        .pushpin {
+            width: 14px;
+            height: 14px;
+            background: radial-gradient(circle at 30% 30%, #e74c3c, #922b21);
+            border-radius: 50%;
+            box-shadow: 2px 4px 6px rgba(0,0,0,0.4);
+            position: absolute;
+            z-index: 25;
+        }
+
+        .paperclip {
+            width: 10px;
+            height: 32px;
+            border: 3px solid #7f8c8d;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 25;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Coffee Stain Effect */
+        .coffee-stain {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 5px solid rgba(110, 75, 40, 0.18);
+            box-shadow: inset 0 0 15px rgba(110, 75, 40, 0.15), 0 0 10px rgba(110, 75, 40, 0.1);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #d9cbb0; }
+        ::-webkit-scrollbar-thumb { background: #ad9564; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #5c4b2b; }
+    </style>
+</head>
+<body class="p-3 sm:p-6 md:p-10 relative">
+
+    <!-- COFFEE STAIN BACKGROUND ACCENTS -->
+    <div class="coffee-stain top-12 left-8 rotate-12"></div>
+    <div class="coffee-stain bottom-20 right-12 -rotate-45 hidden md:block"></div>
+
+    <!-- MAIN CONTAINER SCRAPBOOK BOOK COVER -->
+    <div class="max-w-6xl mx-auto space-y-10 relative">
+
+        <!-- 1. HEADER BANNER SECTION -->
+        <header class="torn-paper torn-paper-edge p-6 sm:p-10 rounded-sm relative -rotate-1 border-t-4 border-craft-500">
+            
+            <!-- Tape & Pushpins Visual Accents -->
+            <div class="washi-tape w-32 h-7 absolute -top-3 left-10 -rotate-6"></div>
+            <div class="washi-tape washi-tape-pink w-36 h-7 absolute -top-3 right-12 rotate-3"></div>
+            <div class="pushpin top-3 left-1/2 -translate-x-1/2"></div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
+                <div class="space-y-2 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-craft-200 border border-craft-400 rounded text-xs font-typewriter">
+                        <span>✣ VOL. 99 &bull; CLASSIFIED JUNK DOSSIER</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-hand font-bold text-craft-900 tracking-wide">
+                        THE CHRONICLES OF <span id="displayFriendName" class="underline decoration-wavy decoration-ink-red text-ink-sepia">RANMART</span>
+                    </h1>
+                    <p class="font-gochi text-lg sm:text-xl text-craft-800">
+                        "Uncensored Scrapbook of Pure Nonsense, Peak Delusion"
+                    </p>
+                </div>
+
+                <!-- Custom Friend Name Input & Dynamic Stamp Counters -->
+                <div class="flex flex-col items-center md:items-end gap-3">
+                    <div class="bg-craft-100 p-3 rounded border-2 border-dashed border-craft-400 flex items-center gap-2 shadow-sm">
+                        <span class="font-typewriter text-xs text-craft-800">EDIT NAME:</span>
+                        <input type="text" id="friendNameInput" value="RANMART" class="bg-transparent border-b-2 border-craft-800 px-2 py-0.5 text-sm font-hand font-bold outline-none w-36 text-ink-sepia focus:border-ink-red">
+                        <button onclick="updateFriendName()" class="bg-craft-800 text-craft-100 text-xs px-3 py-1 rounded font-typewriter hover:bg-ink-red transition-colors">
+                            SAVE
+                        </button>
+                    </div>
+
+                    <!-- Interactive Stamp Counter Tally -->
+                    <div class="flex items-center gap-3">
+                        <div class="rubber-stamp cursor-pointer hover:scale-105 transition-transform" onclick="incrementAura()">
+                            AURA: <span id="auraCounter">9999</span> PTS
+                        </div>
+                        <div class="rubber-stamp text-ink-blue border-ink-blue cursor-pointer hover:scale-105 transition-transform" onclick="incrementChaos()">
+                            CHAOS: <span id="chaosCounter">404</span> %
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 2. POLAROID PHOTO GALLERY (EXACTLY 6 PHOTO SLOTS) -->
+        <section class="torn-paper p-6 sm:p-10 rounded-sm space-y-8 relative rotate-1">
+            <div class="washi-tape washi-tape-blue w-40 h-8 absolute -top-4 left-1/3 -rotate-2"></div>
+            <div class="paperclip top-2 right-8"></div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-dashed border-craft-400 pb-4">
+                <div>
+                    <h2 class="text-3xl font-hand font-bold text-craft-900 flex items-center gap-2">
+                        ✦ POLAROID ARCHIVES (6 EXHIBITS)
+                    </h2>
+                    <p class="font-typewriter text-xs text-craft-800">
+                        archives
+                    </p>
+                </div>
+                <button onclick="randomizePolaroidTilts()" class="mt-2 sm:mt-0 font-hand text-base bg-craft-300 hover:bg-craft-400 px-4 py-1.5 rounded border border-craft-500 transition-all flex items-center gap-1 shadow-sm">
+                    ⟳ RE-SHUFFLE POLAROIDS
+                </button>
+            </div>
+
+            <!-- 6 Polaroid Grid Layout -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-4">
+
+                <!-- POLAROID FRAME 1 -->
+                <div class="polaroid-frame -rotate-3 cursor-pointer group" onclick="openLightbox('img1', 'cap1')">
+                    <div class="washi-tape w-24 h-6 absolute -top-3 left-1/2 -translate-x-1/2 rotate-1"></div>
+                    <div class="aspect-square bg-craft-300 overflow-hidden border border-gray-200">
+                        <img id="img1" 
+                             src="img1.jfif" 
+                             alt="Ranmart Photo 1" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                             onerror="this.onerror=null; this.src='img1.png'; this.onerror=function(){this.src='img1.jpg';};">
+                    </div>
+                    <p id="cap1" class="font-gochi text-lg text-center mt-3 text-craft-900 leading-tight">
+                        "lameh kayoh"
+                    </p>
+                </div>
+
+                <!-- POLAROID FRAME 2 -->
+                <div class="polaroid-frame rotate-2 cursor-pointer group" onclick="openLightbox('img2', 'cap2')">
+                    <div class="washi-tape washi-tape-pink w-24 h-6 absolute -top-3 left-1/2 -translate-x-1/2 -rotate-2"></div>
+                    <div class="aspect-square bg-craft-300 overflow-hidden border border-gray-200">
+                        <img id="img2" 
+                             src="img2.jfif" 
+                             alt="Ranmart Photo 2" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                             onerror="this.onerror=null; this.src='img2.png'; this.onerror=function(){this.src='img2.jpg';};">
+                    </div>
+                    <p id="cap2" class="font-gochi text-lg text-center mt-3 text-craft-900 leading-tight">
+                        "bengbengbeng"
+                    </p>
+                </div>
+
+                <!-- POLAROID FRAME 3 -->
+                <div class="polaroid-frame -rotate-2 cursor-pointer group" onclick="openLightbox('img3', 'cap3')">
+                    <div class="washi-tape washi-tape-blue w-24 h-6 absolute -top-3 left-1/2 -translate-x-1/2 rotate-3"></div>
+                    <div class="aspect-square bg-craft-300 overflow-hidden border border-gray-200">
+                        <img id="img3" 
+                             src="img3.jfif" 
+                             alt="Ranmart Photo 3" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                             onerror="this.onerror=null; this.src='img3.png'; this.onerror=function(){this.src='img3.jpg';};">
+                    </div>
+                    <p id="cap3" class="font-gochi text-lg text-center mt-3 text-craft-900 leading-tight">
+                        "pagkabialng ko tatlo baby 123"
+                    </p>
+                </div>
+
+                <!-- POLAROID FRAME 4 -->
+                <div class="polaroid-frame rotate-4 cursor-pointer group" onclick="openLightbox('img4', 'cap4')">
+                    <div class="washi-tape w-24 h-6 absolute -top-3 left-1/2 -translate-x-1/2 -rotate-1"></div>
+                    <div class="aspect-square bg-craft-300 overflow-hidden border border-gray-200">
+                        <img id="img4" 
+                             src="img4.jfif" 
+                             alt="Ranmart Photo 4" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                             onerror="this.onerror=null; this.src='img4.png'; this.onerror=function(){this.src='img4.jpg';};">
+                    </div>
+                    <p id="cap4" class="font-gochi text-lg text-center mt-3 text-craft-900 leading-tight">
+                        "nyom nyom"
+                    </p>
+                </div>
+
+                <!-- POLAROID FRAME 5 -->
+                <div class="polaroid-frame -rotate-4 cursor-pointer group" onclick="openLightbox('img5', 'cap5')">
+                    <div class="washi-tape washi-tape-pink w-24 h-6 absolute -top-3 left-1/2 -translate-x-1/2 rotate-2"></div>
+                    <div class="aspect-square bg-craft-300 overflow-hidden border border-gray-200">
+                        <img id="img5" 
+                             src="img5.jfif" 
+                             alt="Ranmart Photo 5" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                             onerror="this.onerror=null; this.src='img5.png'; this.onerror=function(){this.src='img5.jpg';};">
+                    </div>
+                    <p id="cap5" class="font-gochi text-lg text-center mt-3 text-craft-900 leading-tight">
+                        "Nyayap"
+                    </p>
+                </div>
+
+                <!-- POLAROID FRAME 6 -->
+                <div class="polaroid-frame rotate-3 cursor-pointer group" onclick="openLightbox('img6', 'cap6')">
+                    <div class="washi-tape washi-tape-blue w-24 h-6 absolute -top-3 left-1/2 -translate-x-1/2 -rotate-3"></div>
+                    <div class="aspect-square bg-craft-300 overflow-hidden border border-gray-200">
+                        <img id="img6" 
+                             src="img6.jfif" 
+                             alt="Ranmart Photo 6" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                             onerror="this.onerror=null; this.src='img6.png'; this.onerror=function(){this.src='img6.jpg';};">
+                    </div>
+                    <p id="cap6" class="font-gochi text-lg text-center mt-3 text-craft-900 leading-tight">
+                        "Uhgghghh"
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. INTERACTIVE SCRAPBOOK MESSAGE CONTAINER (WITH NEXT / PREV) -->
+        <section class="torn-paper p-6 sm:p-10 rounded-sm relative -rotate-1 space-y-6">
+            <div class="washi-tape washi-tape-pink w-36 h-7 absolute -top-3 left-10 -rotate-2"></div>
+            <div class="pushpin top-3 right-6"></div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-dashed border-craft-400 pb-4">
+                <div>
+                    <h2 class="text-3xl font-hand font-bold text-craft-900 flex items-center gap-2">
+                        ✉ SCRAPBOOK MESSAGES & DISPATCHES
+                    </h2>
+                    <p class="font-typewriter text-xs text-craft-800">
+                        Tap Next and Previous to read through the secret message logs!
+                    </p>
+                </div>
+                <div class="mt-2 sm:mt-0 font-typewriter text-xs bg-craft-200 px-3 py-1 rounded border border-craft-400">
+                    MESSAGE <span id="msgIndexDisplay" class="font-bold text-ink-red">1</span> OF <span id="msgTotalDisplay" class="font-bold">5</span>
+                </div>
+            </div>
+
+            <!-- Letter Paper Container -->
+            <div class="bg-craft-100 p-6 sm:p-8 rounded border-2 border-dashed border-craft-400 relative min-h-[220px] flex flex-col justify-between shadow-inner">
+                <div class="paperclip -top-4 left-6"></div>
+                
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center text-xs font-typewriter text-craft-500 border-b border-craft-300 pb-2">
+                        <span id="msgHeader">DISPATCH #01 &bull; TOP SECRET</span>
+                        <span id="msgDate">STAMPED: TODAY</span>
+                    </div>
+                    
+                    <p id="msgBodyText" class="font-hand text-2xl sm:text-3xl text-ink-sepia leading-relaxed transition-opacity duration-300">
+                        "from my bff"
+                    </p>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-craft-300 flex justify-between items-center font-typewriter text-xs">
+                    <span id="msgSubtag" class="font-stamp text-ink-stamp border border-ink-stamp px-2 py-0.5 text-xs">CONFIDENTIAL</span>
+                    
+                    <!-- Prev / Next Controls -->
+                    <div class="flex items-center gap-3">
+                        <button onclick="prevMessage()" class="px-4 py-2 bg-craft-300 hover:bg-craft-400 border border-craft-500 rounded font-bold transition-all active:scale-95 flex items-center gap-1 shadow-sm">
+                            &#9664; PREV
+                        </button>
+                        <button onclick="nextMessage()" class="px-4 py-2 bg-craft-800 text-craft-100 hover:bg-ink-red border border-craft-900 rounded font-bold transition-all active:scale-95 flex items-center gap-1 shadow-sm">
+                            NEXT &#9654;
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- LIGHTBOX MODAL FOR POLAROIDS -->
+    <div id="lightboxModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm" onclick="closeLightbox()">
+        <div class="polaroid-frame max-w-md w-full rotate-0 scale-100" onclick="event.stopPropagation()">
+            <div class="aspect-square bg-craft-300 overflow-hidden mb-4">
+                <img id="lightboxImg" src="" alt="Expanded View" class="w-full h-full object-cover">
+            </div>
+            <p id="lightboxCap" class="font-gochi text-2xl text-center text-craft-900"></p>
+            <div class="text-center mt-4">
+                <button onclick="closeLightbox()" class="font-typewriter text-xs bg-craft-800 text-craft-100 px-4 py-1.5 rounded hover:bg-ink-red">
+                    CLOSE SCRAPBOOK
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-10 font-typewriter text-xs text-craft-800 space-y-1">
+        <p>HAND-MADE SCRAPBOOK DOSSIER &bull; BUILT WITH TACTILE SLOP</p>
+        <p class="text-craft-500">NO POLAROIDS WERE HARMED IN THE PRODUCTION OF THIS JOURNAL</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // State variables
+        let friendName = "RANMART";
+        let auraPoints = 9999;
+        let chaosLevel = 404;
+
+        // Custom Scrapbook Messages List
+        const messages = [
+            {
+                header: "DISPATCH #01 • TOP SECRET",
+                date: "STAMPED: TODAY",
+                tag: "CONFIDENTIAL",
+                body: "bff chatgpt create me a sweet long message para sa rupah ko na si jon ranmart fababier fetizanan"
+            },
+            {
+                header: "DISPATCH #02 • AUDIT REPORT",
+                date: "STAMPED: 02:00 AM",
+                tag: "HIGH RISK",
+                body: "Eto na, bestie! Inihanda ko na ang pinaka-sweet, medyo cheesy, pero sobrang heartfelt na long message para sa rupah mong si Ranmart. Pwede mo itong i-send sa kaniya para kiligin at lalo pang mahalin ka!"
+            },
+            {
+                header: "DISPATCH #03 • MEMORY LOG",
+                date: "STAMPED: RECENTLY",
+                tag: "MEMORANDUM",
+                body: "Gusto ko lang i-take ang moment na ito para sabihin sa'yo kung gaano ka ka-special sa akin. Alam mo, minsan iniisip ko kung paano kita nakilala at kung paano napadali ng presensya mo ang mga araw ko. Sabi nila, ang pag-ibig daw ay parang laro—minsan mahirap, minsan kailangang mag-isip ng moves—pero sa'yo, parang hindi ko na kailangang mag-effort nang sobra para lang maging masaya dahil automatic na."
+            },
+            {
+                header: "DISPATCH #04 • AURA METRICS",
+                date: "STAMPED: CLASSIFIED",
+                tag: "APPROVED",
+                body: "Thank you sa lahat ng lambing, sa pag-intindi sa mga kakulitan ko, at sa pagiging tahanan ko tuwing pagod na ako sa mundo. Ikaw ang paborito kong pahinga at ang pinakamagandang \"plot twist\" na nangyari sa buhay ko."
+            },
+            {
+                header: "DISPATCH #05 • FINAL VERDICT",
+                date: "STAMPED: FOREVER",
+                tag: "BRO CODE",
+                body: "Sana alam mo na kahit anong mangyari, hinding-hindi kita ipagpapalit at nandito lang ako para suportahan ka sa lahat ng gusto mong marating. I love you so much, Ranmart ko. Palagi mong tatandaan 'yan, ha?"
+            }
+        ];
+
+        let currentMsgIndex = 0;
+
+        function updateMessageDisplay() {
+            const msg = messages[currentMsgIndex];
+            const bodyText = msg.body.replace(/{NAME}/g, friendName);
+            
+            const msgEl = document.getElementById('msgBodyText');
+            msgEl.style.opacity = '0';
+            
+            setTimeout(() => {
+                document.getElementById('msgHeader').innerText = msg.header;
+                document.getElementById('msgDate').innerText = msg.date;
+                document.getElementById('msgSubtag').innerText = msg.tag;
+                document.getElementById('msgIndexDisplay').innerText = currentMsgIndex + 1;
+                document.getElementById('msgTotalDisplay').innerText = messages.length;
+                msgEl.innerText = `"${bodyText}"`;
+                msgEl.style.opacity = '1';
+            }, 150);
+        }
+
+        function nextMessage() {
+            currentMsgIndex = (currentMsgIndex + 1) % messages.length;
+            updateMessageDisplay();
+            playSound('rip');
+        }
+
+        function prevMessage() {
+            currentMsgIndex = (currentMsgIndex - 1 + messages.length) % messages.length;
+            updateMessageDisplay();
+            playSound('rip');
+        }
+
+        // 1. Update Friend Name Dynamic Handles
+        function updateFriendName() {
+            const val = document.getElementById('friendNameInput').value.trim();
+            if(val) {
+                friendName = val.toUpperCase();
+                document.getElementById('displayFriendName').innerText = friendName;
+                document.querySelectorAll('.friend-name-text').forEach(el => el.innerText = friendName);
+                updateMessageDisplay();
+                playSound('stamp');
+            }
+        }
+
+        // 2. Increment Counters
+        function incrementAura() {
+            auraPoints += 100;
+            document.getElementById('auraCounter').innerText = auraPoints;
+            playSound('bell');
+        }
+
+        function incrementChaos() {
+            chaosLevel += 15;
+            document.getElementById('chaosCounter').innerText = chaosLevel;
+            playSound('stamp');
+        }
+
+        // 3. Randomize Polaroid Tilts
+        function randomizePolaroidTilts() {
+            const frames = document.querySelectorAll('.polaroid-frame');
+            frames.forEach(frame => {
+                const deg = (Math.random() * 10 - 5).toFixed(1);
+                frame.style.transform = `rotate(${deg}deg)`;
+            });
+            playSound('shutter');
+        }
+
+        // 4. Sound Synthesizer (Web Audio API)
+        function playSound(type) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                if (type === 'rip') {
+                    const bufferSize = ctx.sampleRate * 0.12;
+                    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                    const output = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        output[i] = Math.random() * 2 - 1;
+                    }
+                    const whiteNoise = ctx.createBufferSource();
+                    whiteNoise.buffer = buffer;
+                    const filter = ctx.createBiquadFilter();
+                    filter.type = 'highpass';
+                    filter.frequency.value = 1000;
+                    whiteNoise.connect(filter);
+                    filter.connect(ctx.destination);
+                    whiteNoise.start();
+                } else if (type === 'shutter') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(800, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.05);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.05);
+                } else if (type === 'bell') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(1400, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.4, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.4);
+                } else if (type === 'stamp') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(150, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 0.12);
+                    gain.gain.setValueAtTime(0.6, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.12);
+                }
+            } catch (e) {
+                console.log("Audio not supported or initialized", e);
+            }
+        }
+
+        // 5. Lightbox Controls
+        function openLightbox(imgId, capId) {
+            const src = document.getElementById(imgId).src;
+            const cap = document.getElementById(capId).innerText;
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightboxCap').innerText = cap;
+            document.getElementById('lightboxModal').classList.remove('hidden');
+            playSound('shutter');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+            playSound('bell');
+        }
+
+        // Initialize Message Box on Load
+        window.onload = function() {
+            updateMessageDisplay();
+        };
+    </script>
+</body>
+</html>
